@@ -42,10 +42,8 @@ namespace WindowsFormsApp1
             {
                 foreach (Student s in service.GetAllStudents())
                 {
-                    // Əvvəlcə tələbənin öz məlumatını yazırıq
-                    sw.WriteLine($"Tələbə: {s.Code} | {s.FirstName} {s.LastName} | Yaş: {s.Age}");
+                   sw.WriteLine($"Tələbə: {s.Code} | {s.FirstName} {s.LastName} | Yaş: {s.Age}");
 
-                    // Sonra həmin tələbənin qiymətlərini alt-alta yazırıq
                     foreach (Grade g in s.Grades)
                     {
                         sw.WriteLine($"   - Fənn: {g.Subject}, Qiymət: {g.Score}");
@@ -156,9 +154,6 @@ namespace WindowsFormsApp1
         }
     }
 }
-
-
-// 1. Grade (Qiymət) sinfi
 public class Grade
 {
     public string Subject { get; set; }
@@ -170,8 +165,6 @@ public class Grade
         Score = score;
     }
 }
-
-// 2. Student (Tələbə) sinfi
 public class Student
 {
     public string Code { get; set; }
@@ -188,8 +181,6 @@ public class Student
         Age = age;
     }
 }
-
-// 3. IStudentService İnterfeysi
 public interface IStudentService
 {
     bool AddStudent(Student student);
@@ -199,11 +190,9 @@ public interface IStudentService
     List<Student> GetAllStudents();
 }
 
-// 4. StudentService Sinfi (Məlumatları RAM-da static List-də saxlayır)
 public class StudentService : IStudentService
 {
     public static List<Student> Students = new List<Student>();
-
     public bool AddStudent(Student student)
     {
         foreach (Student s in Students)
@@ -233,14 +222,12 @@ public class StudentService : IStudentService
         st.Grades.Add(new Grade(subject, score));
         return true;
     }
-
     public List<Grade> GetStudentGrades(string studentCode)
     {
         Student st = FindStudent(studentCode);
         if (st == null) return null;
         return st.Grades;
     }
-
     public List<Student> GetAllStudents()
     {
         return Students;
